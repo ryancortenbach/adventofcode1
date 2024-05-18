@@ -1,0 +1,48 @@
+# Import all of the libraries needed for the project
+import numpy as np
+import pandas as pd
+
+# Read the CSV file of what the input Advent of Code gave me
+# (I turned it into a CSV using google sheets)
+df = pd.read_csv('/kaggle/input/adventofcodeday1/numbers - Sheet1 (1).csv')
+
+# Define the function to find and combine the first and last number in a string
+def combine_first_and_last_number(string):
+    # Assigning variables for the first and last numbers of the strings 
+    first_number = None
+    last_number = None
+    
+    # Iterate through each string's individual character
+    for character in string:
+        
+        # If the character is a digit, then it assigns the first instance to first_number
+        if character.isdigit():
+            
+            if first_number is None:
+                first_number = character
+            
+            # This assigns last_number to every number AFTER the first, until it gets
+            # to the last one, where last_number finally gets assigned to
+            last_number = character
+    
+    # If first_number and last_number have digits in them,
+    if first_number is not None and last_number is not None:
+        combined_number = int(first_number + last_number)
+        
+    return combined_number
+
+total_sum = 0  # This is the final number we return. This num is all sums of combined_numbers
+
+# Iterating over each string in the 'Numbers' column of CSV file
+for number in df['Numbers']:
+    
+    # For each string that we have in the Numbers column, we use the function to get combined_number
+    combined_number = combine_first_and_last_number(number)
+    
+    # We then add combined to total_sum
+    total_sum += combined_number
+
+# Print the total sum of all two digit numbers from each string
+print("Total sum of combined numbers:", total_sum)
+
+# Done! my answer is 54951
